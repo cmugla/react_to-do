@@ -1,39 +1,17 @@
 'use strict'
 
 const taskRouter  = require('express').Router();
-const db          = require('./models/task');
+const db          = require('../models/task');
 
-let taskData = [];
+const sendJSON    = (req,res)=>{res.json(res.rows)}
 
 taskRouter.route('/:id')
-  .get(function(req,res){
-    if(taskData[req.params.id]) {
-      res.send(taskData[req.params.id])
-    } else {
-      res.send('not there',404)
-    }
-  })
-  .put(function(req,res){
-    if(taskData[req.params.id]) {
-      taskData[req.params.id].task = 'new data'
-      res.send(taskData)
-    } else {
-      res.send('not there',404)
-    }
-  })
-  .delete(function(req,res){
-    taskData.splice(req.params.id, 1);
-    res.send(taskData)
-  })
+  .put(db.updateTask, sendJSON)
+  .delete(db.removeTask, (req,res)=>res.send(req.params.id,'deleted'));
 
 taskRouter.route('/')
-  .get(function(req,res){
-    res.send(taskData)
-  })
-  .post(function(req,res){
-    taskData.push({task: 'data'})
-    res.send(taskData)
-  })
+  .get(db.getTasks, sendJSON)
+  .post(db.addTask, sendJSON);
 
 
 module.exports = taskRouter;
