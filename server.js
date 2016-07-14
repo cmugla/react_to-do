@@ -5,6 +5,8 @@ const logger          = require('morgan')
 const path            = require('path')
 const bodyParser      = require('body-parser')
 
+const taskRouter      = require('./routes/tasks')
+
 const app             = express()
 const PORT            = process.env.PORT || 3009
 
@@ -20,24 +22,7 @@ app.listen(PORT, function(){
 
 /* Routes */
 
-app.route('/tasks/:id')
-  .get(function(req,res){
-    res.send(`show task ${req.params.id}`)
-  })
-  .put(function(req,res){
-    res.send(`edit task ${req.params.id}`)
-  })
-  .delete(function(req,res){
-    res.send(`delete task ${req.params.id}`)
-  })
-
-app.route('/tasks')
-  .get(function(req,res){
-    res.send('show tasks')
-  })
-  .post(function(req,res){
-    res.send('posted new track')
-  })
+app.use('/tasks', taskRouter);
 
 app.get('/', function(req,res){
   res.send('home')
