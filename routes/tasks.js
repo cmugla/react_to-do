@@ -4,7 +4,6 @@ const taskRouter = require('express').Router();
 
 let taskData = [];
 
-
 taskRouter.route('/:id')
   .get(function(req,res){
     if(taskData[req.params.id]) {
@@ -15,7 +14,7 @@ taskRouter.route('/:id')
   })
   .put(function(req,res){
     if(taskData[req.params.id]) {
-      taskData[req.params.id] = 'new data'
+      taskData[req.params.id].task = 'new data'
       res.send(taskData)
     } else {
       res.send('not there',404)
@@ -31,7 +30,7 @@ taskRouter.route('/')
     res.send(taskData)
   })
   .post(function(req,res){
-    taskData.push('data')
+    taskData.push({task: 'data'})
     res.send(taskData)
   })
 
