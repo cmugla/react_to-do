@@ -1,14 +1,18 @@
 'use strict'
 
-const express         = require('express')
-const logger          = require('morgan')
-const path            = require('path')
-const bodyParser      = require('body-parser')
+const env         = process.env.NODE_ENV || 'development';
+const DEV         = env==='development';
+const dotenv      = (DEV) ? require('dotenv').config() : undefined;
 
-const taskRouter      = require('./routes/tasks')
+const express     = require('express')
+const logger      = require('morgan')
+const path        = require('path')
+const bodyParser  = require('body-parser')
 
-const app             = express()
-const PORT            = process.env.PORT || 3009
+const taskRouter  = require('./routes/tasks')
+
+const app         = express()
+const PORT        = process.env.PORT || 3009
 
 // set up logging so that we can see what's happening
 app.use(logger('dev'))

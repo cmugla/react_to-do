@@ -1,6 +1,7 @@
 'use strict'
 
-const taskRouter = require('express').Router();
+const taskRouter  = require('express').Router();
+const db          = require('./models/task');
 
 let taskData = [];
 
