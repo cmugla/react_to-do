@@ -12,10 +12,10 @@ const bodyParser  = require('body-parser')
 const taskRouter  = require('./routes/tasks')
 
 const app         = express()
-const PORT        = process.env.PORT || 3009
+const PORT        = process.env.PORT || 3000
 
 // set up logging so that we can see what's happening
-app.use(logger('dev'))
+app.use(logger( DEV ? 'dev' : 'common' ));
 app.use(bodyParser.json())
 app.use(express.static(path.join(__dirname,'dist')));
 
@@ -27,7 +27,3 @@ app.listen(PORT, function(){
 /* Routes */
 
 app.use('/tasks', taskRouter);
-
-app.get('/', function(req,res){
-  res.send('home')
-})
