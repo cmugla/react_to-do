@@ -5,6 +5,8 @@ import React            from 'react';
 import ReactDOM         from 'react-dom'
 import Nav              from './Nav.jsx'
 import Footer           from './Footer.jsx'
+import TaskForm         from './TaskForm.jsx'
+// import TaskList         from './TaskList.jsx'
 
 // create a React Component called _App_
 export default class App extends React.Component{
@@ -22,6 +24,9 @@ export default class App extends React.Component{
     }
   }
   // note that classes do **not** have commas between their methods
+  addTask(newTask){
+    console.log(newTask);
+  }
 
   // 90% of your components will render()
   // REMEMBER you can only return **one** root element from a render fn.
@@ -32,9 +37,10 @@ export default class App extends React.Component{
           <Nav />
         </header>
         <div className="container">
-          <div className="row">
-          {/*everything goes in here*/}
-          </div>
+          <TaskForm addTask={this.addTask.bind(this)} />
+          <section className="row">
+            {/* Everything goes here */}
+          </section>
         </div>
         <Footer />
       </container>
