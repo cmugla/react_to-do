@@ -28,9 +28,9 @@ module.exports = {
   /* POST /tasks */
   addTask(req,res,next){
     console.log('===== add task =====', req.body);
-    _db.any(`
+    _db.one(`
       INSERT INTO tasks (task_name, task_desc)
-      VALUES ($/name/, $/desc/)
+      VALUES ($/task_name/, $/task_desc/)
       RETURNING *;`, req.body)
       .then( task=>{
         console.log('Added task successful!');
@@ -47,10 +47,10 @@ module.exports = {
     req.body.tID = Number.parseInt(req.params.id);
     req.body.completed = !!req.body.completed
 
-    _db.any(`
+    _db.one(`
       UPDATE tasks
-      SET task_name = $/name/,
-        task_desc = $/desc/,
+      SET task_name = $/task_name/,
+        task_desc = $/task_desc/,
         completed = $/completed/,
         task_time_start = $/task_time_start/,
         task_time_end = $/task_time_end/

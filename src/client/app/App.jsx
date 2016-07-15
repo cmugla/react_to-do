@@ -41,31 +41,31 @@ export default class App extends React.Component{
 
   // note that classes do **not** have commas between their methods
   addTask(newTask){
-
     // send this change to the db (ajax)
-    newTask.completed = false;
-    newTask.task_id = Date.now()
-
-    // when the data comes back, update the state
-    this.state.tasks[newTask.task_id] = newTask
-
-    this.setState({
-      tasks: this.state.tasks
+    ajax.createTask(newTask).then( data=>{
+      // when the data comes back, update the state
+      this.state.tasks[ data.task_id ] = data
+      this.setState({
+        tasks: this.state.tasks
+      })
     })
+
   }
 
   /* Toggle task */
 
   toggleTask(key) {
-    this.state.tasks[key].completed = !this.state.tasks[key].completed
+    let myTask = this.state.tasks[key]
+    myTask.completed = !myTask.completed
 
     // send out this new change to the db(ajax)
-
-    // bring in AJAX here
-
-    this.setState({
-      tasks: this.state.tasks
+    ajax.updateTask( myTask ).then(data=>{
+      this.state.tasks[ data.task_id ] = data
+      this.setState({
+        tasks: this.state.tasks
+      })
     })
+
   }
 
   // 90% of your components will render()
