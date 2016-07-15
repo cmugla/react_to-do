@@ -8,8 +8,8 @@ export default function TaskForm(props){
     event.preventDefault();
 
     const newTask = {
-      name: event.target.elements.task_name.value,
-      desc: event.target.elements.task_desc.value
+      task_name: event.target.elements.task_name.value,
+      task_desc: event.target.elements.task_desc.value
     }
 
     props.addTask(newTask);

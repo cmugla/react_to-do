@@ -6,7 +6,7 @@ import ReactDOM         from 'react-dom'
 import Nav              from './Nav.jsx'
 import Footer           from './Footer.jsx'
 import TaskForm         from './TaskForm.jsx'
-// import TaskList         from './TaskList.jsx'
+import TaskList         from './TaskList.jsx'
 
 // create a React Component called _App_
 export default class App extends React.Component{
@@ -23,9 +23,41 @@ export default class App extends React.Component{
       tasks : {}
     }
   }
+
+  // this is right after the componenet is mounted on the screen
+  componentDidMount(){
+    // go to the sb and get the freshest tasks
+
+    // when the data comes back, update the state
+  }
+
   // note that classes do **not** have commas between their methods
   addTask(newTask){
-    console.log(newTask);
+
+    // send this change to the db (ajax)
+    newTask.completed = false;
+    newTask.task_id = Date.now()
+
+    // when the data comes back, update the state
+    this.state.tasks[newTask.task_id] = newTask
+
+    this.setState({
+      tasks: this.state.tasks
+    })
+  }
+
+  /* Toggle task */
+
+  toggleTask(key) {
+    this.state.tasks[key].completed = !this.state.tasks[key].completed
+
+    // send out this new change to the db(ajax)
+
+    // bring in AJAX here
+
+    this.setState({
+      tasks: this.state.tasks
+    })
   }
 
   // 90% of your components will render()
@@ -39,7 +71,20 @@ export default class App extends React.Component{
         <div className="container">
           <TaskForm addTask={this.addTask.bind(this)} />
           <section className="row">
-            {/* Everything goes here */}
+            <article className="col-md-6">
+              <h3>Open Items</h3>
+              <TaskList
+                taskState={this.state.tasks}
+                action={this.toggleTask.bind(this)}
+                f={x=>!x} />
+            </article>
+            <article className="col-md-6">
+              <h3>Completed Items</h3>
+              <TaskList
+                taskState={this.state.tasks}
+                action={this.toggleTask.bind(this)}
+                f={x=>x} />
+            </article>
           </section>
         </div>
         <Footer />
