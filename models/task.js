@@ -51,7 +51,9 @@ module.exports = {
       UPDATE tasks
       SET task_name = $/name/,
         task_desc = $/desc/,
-        completed = $/completed/
+        completed = $/completed/,
+        task_time_start = $/task_time_start/,
+        task_time_end = $/task_time_end/
       WHERE task_id = $/tID/
       RETURNING *;`, req.body)
       .then( task=>{
