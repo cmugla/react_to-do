@@ -8,6 +8,9 @@ import Footer           from './Footer.jsx'
 import TaskForm         from './TaskForm.jsx'
 import TaskList         from './TaskList.jsx'
 
+import ajax             from '../helpers/ajaxAdapter.js'
+import util             from '../helpers/util.js'
+
 // create a React Component called _App_
 export default class App extends React.Component{
 
@@ -26,9 +29,14 @@ export default class App extends React.Component{
 
   // this is right after the componenet is mounted on the screen
   componentDidMount(){
-    // go to the sb and get the freshest tasks
+    // go to the db and get the freshest tasks
+    ajax.getTasks().then( data=>
+      // when the data comes back, update the state
+      this.setState({
+        tasks: data.indexByKey('task_id')
+      })
+    )
 
-    // when the data comes back, update the state
   }
 
   // note that classes do **not** have commas between their methods

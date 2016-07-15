@@ -16,8 +16,7 @@ export default function TaskList(props){
             key={key}
             onClick={()=>props.action(key)}>
 
-            <strong>{props.taskState[key].task_name}</strong>
-            {props.taskState[key].task_desc}</button>
+            <strong>{props.taskState[key].task_name}</strong> {props.taskState[key].task_desc}</button>
         ))
       }
 
